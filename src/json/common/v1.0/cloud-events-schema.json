@@ -1,0 +1,182 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "CloudEvents Specification JSON Schema extended to Kramp context",
+  "$id": "https://kramp.com/schemas/common/v1/cloudevents-kramp.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "Identifies the event. Producers MUST ensure that source + id is unique for each distinct event.",
+      "$ref": "#/definitions/iddef",
+      "examples": [
+        "01912d19-5bed-77de-8ce7-7368322b58dd",
+        "060000000000000009896231"
+      ]
+    },
+    "source": {
+      "description": "Identifies the context in which an event happened. Often this will include information such as the event source, the organization publishing the event or the process that produced the event.",
+      "$ref": "#/definitions/sourcedef",
+      "examples" : [
+        "urn:kramp:application:dynamics-crm",
+        "urn:kramp:application:dibbler"
+      ]
+    },
+    "specversion": {
+      "description": "The version of the CloudEvents specification which the event uses. This enables the interpretation of the context.",
+      "$ref": "#/definitions/specversiondef",
+      "examples": [
+        "1.0"
+      ]
+    },
+    "type": {
+      "description": "Describes the type of event related to the originating occurrence. Often this attribute is used for routing, observability, policy enforcement, etc.",
+      "$ref": "#/definitions/typedef",
+      "examples" : [
+        "com.kramp.customer.addressUpdated.v1",
+        "com.kramp.order.salesOrderConfirmed.v1"
+      ]
+    },
+    "datacontenttype": {
+      "description": "Content type of the data value. Must adhere to RFC 2046 format.",
+      "$ref": "#/definitions/datacontenttypedef",
+      "examples": [
+        "application/json; charset=utf-8",
+        "text/xml"
+      ]
+    },
+    "dataschema": {
+      "description": "Identifies the schema that data adheres to.",
+      "$ref": "#/definitions/dataschemadef"
+    },
+    "subject": {
+      "description": "Describes the subject of the event in the context of the event producer (identified by source).",
+      "$ref": "#/definitions/subjectdef",
+      "examples": [
+        "urn:kramp:address:CA0000_1584478",
+        "urn:kramp:sales-order:118513847"
+      ]
+    },
+    "time": {
+      "description": "Timestamp of when the occurrence happened. Must adhere to RFC 3339.",
+      "$ref": "#/definitions/timedef",
+      "examples": [
+        "2024-08-15T15:36:22.001Z"
+      ]
+    },
+    "data": {
+      "description": "The event payload. No restriction is placed on the type of this information. It is encoded into a media format specified by the datacontenttype attribute (e.g. application/json), and adheres to the dataschema format when those respective attributes are present.",
+      "$ref": "#/definitions/datadef",
+      "examples": [ "json document" ]
+    },
+    "data_base64": {
+      "description": "Base64 encoded event payload. Must adhere to RFC4648.",
+      "$ref": "#/definitions/data_base64def",
+      "examples": [
+        "Zm9vYg=="
+      ]
+    },
+    "traceparent": {
+      "description": "Embeds context from W3C TraceContext into a CloudEvent.",
+      "$ref": "#/definitions/traceparentdef",
+      "examples": [
+        "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01"
+      ]
+    },
+    "priority": {
+      "description": "Indicates the relative importance of the event. This value can be used by consuming systems to prioritize processing or routing.",
+      "$ref": "#/definitions/prioritydef",
+      "examples": [
+        "4"
+      ]
+    },
+    "krentitytype": {
+      "description": "Describes the main business entity being the subject of the event exchange.",
+      "$ref": "#/definitions/krentitytypedef",
+      "examples": [
+        "urn:kramp:sales-order",
+        "urn:kramp:address",
+        "urn:kramp:prlcc"
+      ]
+    },
+    "krentityid": {
+      "description": "Describes the natural key of the main business entity (krentitytype) subject of the exchange.",
+      "$ref": "#/definitions/krentityiddef",
+      "examples": [
+        "118513847",
+        "C1030_0350000"
+      ]
+    },
+    "krentityrequestid": {
+      "description": "Identifies the event and enables end-to-end tracing and log-based analysis. This field is the equivalent of the x-rid header.",
+      "$ref": "#/definitions/krentityrequestiddef",
+      "examples": [
+        "01911c67-8829-7436-9f56-0cf30080ad78"
+      ]
+    }
+  },
+  "required": ["id", "source", "specversion", "subject", "time"],
+  "definitions": {
+    "iddef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sourcedef": {
+      "type": "string",
+      "format": "uri-reference",
+      "minLength": 1
+    },
+    "specversiondef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "typedef": {
+      "type": "string",
+      "minLength": 1
+    },
+    "datacontenttypedef": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "dataschemadef": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "minLength": 1
+    },
+    "subjectdef": {
+      "type": ["string"],
+      "minLength": 1
+    },
+    "timedef": {
+      "type": ["string"],
+      "format": "date-time",
+      "minLength": 1
+    },
+    "datadef": {
+      "type": ["object", "string", "number", "array", "boolean", "null"]
+    },
+    "data_base64def": {
+      "type": ["string", "null"],
+      "contentEncoding": "base64"
+    },
+    "traceparentdef": {
+      "type": ["string"],
+      "minLength": 1,
+      "pattern": "^00-(?!0{32})[0-9a-fA-F]{32}-(?!0{16})[0-9a-fA-F]{16}-[0-9a-fA-F]{2}$"
+    },
+    "prioritydef": {
+      "type": ["integer"],
+      "minLength": 1
+    },
+    "krentitytypedef": {
+      "type": ["string"],
+      "minLength": 1
+    },
+    "krentityiddef": {
+      "type": ["string"],
+      "minLength": 1
+    },
+    "krentityrequestiddef": {
+      "type": ["string"],
+      "minLength": 1
+    }
+  }
+}
