@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kramp.com/schemas/finance/v1/item-landed-cost-per-warehouse-collection.json",
+  "title": "Item Landed Cost Per Warehouse Data (Collection)",
+  "description": "Schema for a collection of item landed cost per warehouse entities.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "description": "A single item landed cost per warehouse entity.",
+    "properties": {
+      "warehouseId": {
+        "type": "string",
+        "description": "Unique identifier for the warehouse (Example: WH1000_700)",
+        "maxLength": 100
+      },
+      "itemNumber": {
+        "type": "string",
+        "description": "The unique identifier for the item (Example: MVS5315)",
+        "maxLength": 300
+      },
+      "prlccValue": {
+        "type": "string",
+        "description": "Provisional Landed Cost (PRLCC) value as a string.",
+        "pattern": "^\\d+(\\.\\d+)?$"
+      },
+      "perpetualAverageCost": {
+        "type": "string",
+        "description": "Perpetual average cost value as a string.",
+        "pattern": "^\\d+(\\.\\d+)?$"
+      },
+      "validFrom": {
+        "type": "string",
+        "format": "date-time",
+        "description": "ISO-8601 timestamp indicating when the cost is valid from."
+      },
+      "currencyCode": {
+        "type": "string",
+        "description": "Currency of the cost as a ISO_4217 code (Example: EUR)",
+        "enum": ["AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL", "BSD", "BTN", "BWP", "BYN", "BZD", "CAD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR", "MWK", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLE", "SLL", "SOS", "SRD", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "UYU", "UZS", "VED", "VES", "VND", "VUV", "WST", "XAF", "XCD", "XOF", "XPF", "YER", "ZAR", "ZMW", "ZWL"]
+      }
+    },
+    "required": ["warehouseId", "itemNumber", "prlccValue", "perpetualAverageCost", "validFrom", "currencyCode"],
+    "additionalProperties": false
+  },
+  "minItems": 1
+}
